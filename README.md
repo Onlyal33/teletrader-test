@@ -4,7 +4,7 @@ Teletrader Test App
 [![Maintainability](https://api.codeclimate.com/v1/badges/38f45aa27f48ebabcc2b/maintainability)](https://codeclimate.com/github/Onlyal33/teletrader-test/maintainability)
 
 You can find project's site here:
-
+https://teletrader-test.herokuapp.com/
 ## Available Scripts
 
 In the project directory, you can run:
