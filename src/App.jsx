@@ -1,3 +1,4 @@
+import { useState, useContext, useMemo } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -11,9 +12,29 @@ import HomePage from './features/HomePage';
 import DetailsPage from './features/DetailsPage';
 import FavoritesPage from './features/FavoritesPage';
 import LoginButton from './features/LoginButton';
+import FavoritesLink from './features/FavoritesLink';
+import AuthContext from './contexts/AuthContext';
+
+const AuthProvider = ({ children }) => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const logIn = () => {
+    setLoggedIn(true);
+  };
+
+  const authData = useMemo(() => ({
+    loggedIn, logIn,
+  }));
+
+  return (
+    <AuthContext.Provider value={authData}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
 const RequireAuth = ({ children }) => {
-  const auth = { loggedIn: true }; // useContext(AuthContext);
+  const auth = useContext(AuthContext);
   const location = useLocation();
 
   return (
@@ -40,34 +61,38 @@ const NoMatch = () => {
   );
 };
 
-const App = () => (
-  <Router>
-    <div className="h-100">
-      <div className="d-flex flex-column h-100">
-        <Navbar bg="light" expand="lg" className="shadow-sm">
-          <Container>
-            <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
-            <Navbar.Brand as={Link} to="/details">details</Navbar.Brand>
-            <Navbar.Brand as={Link} to="/favorites">favorites</Navbar.Brand>
-            <LoginButton />
-          </Container>
-        </Navbar>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/details" element={<DetailsPage />} />
-          <Route
-            path="/favorites"
-            element={(
-              <RequireAuth>
-                <FavoritesPage />
-              </RequireAuth>
+// eslint-disable-next-line arrow-body-style
+const App = () => {
+  return (
+    <AuthProvider>
+      <Router>
+        <div className="h-100">
+          <div className="d-flex flex-column h-100">
+            <Navbar bg="light" expand="lg" className="shadow-sm">
+              <Container>
+                <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
+                <FavoritesLink />
+                <LoginButton />
+              </Container>
+            </Navbar>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/details" element={<DetailsPage />} />
+              <Route
+                path="/favorites"
+                element={(
+                  <RequireAuth>
+                    <FavoritesPage />
+                  </RequireAuth>
           )}
-          />
-          <Route path="*" element={<NoMatch />} />
-        </Routes>
-      </div>
-    </div>
-  </Router>
-);
+              />
+              <Route path="*" element={<NoMatch />} />
+            </Routes>
+          </div>
+        </div>
+      </Router>
+    </AuthProvider>
+  );
+};
 
 export default App;
