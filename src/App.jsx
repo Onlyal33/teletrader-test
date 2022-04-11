@@ -7,7 +7,6 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { Container, Navbar } from 'react-bootstrap';
-import './App.css';
 import HomePage from './features/HomePage';
 import DetailsPage from './features/DetailsPage';
 import FavoritesPage from './features/FavoritesPage';
@@ -69,31 +68,6 @@ const App = () => (
       </div>
     </div>
   </Router>
-/*
-    <div className="App">
-      <Navbar bg="light">
-      <Nav className="me-auto">
-        <Nav.Link href="#home">Home</Nav.Link>
-        <Nav.Link href="#favorites">Favorites</Nav.Link>
-        <Nav.Link href="#login">Login</Nav.Link>
-      </Nav>
-      </Navbar>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-    */
 );
 
 export default App;

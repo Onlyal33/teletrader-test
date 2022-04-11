@@ -1,6 +1,9 @@
-# Getting Started with Create React App
+Teletrader Test App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![Node.js CI](https://github.com/Onlyal33/teletrader-test/actions/workflows/node.js.yml/badge.svg)](https://github.com/Onlyal33/teletrader-test/actions/workflows/node.js.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/38f45aa27f48ebabcc2b/maintainability)](https://codeclimate.com/github/Onlyal33/teletrader-test/maintainability)
+
+You can find project's site here:
 
 ## Available Scripts
 
