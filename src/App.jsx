@@ -10,12 +10,14 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { Container, Navbar } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import HomePage from './features/HomePage';
 import DetailsPage from './features/DetailsPage';
 import FavoritesPage from './features/FavoritesPage';
 import LoginButton from './features/LoginButton';
 import FavoritesLink from './features/FavoritesLink';
 import AuthContext from './contexts/AuthContext';
+import { addSymbol, updateSymbolInfo } from './slices/tickerSlice';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -64,10 +66,17 @@ const NoMatch = () => {
 };
 
 const App = ({ sockets }) => {
+  const dispatch = useDispatch();
   sockets.forEach((socket) => {
     // eslint-disable-next-line no-param-reassign
     socket.onmessage = (event) => {
-      console.log(`[message] Data received from server: ${event.data}`);
+      const parsed = JSON.parse(event.data);
+      if (parsed?.event === 'subscribed') {
+        dispatch(addSymbol(parsed));
+      }
+      if (Array.isArray(parsed) && Array.isArray(parsed?.[1])) {
+        dispatch(updateSymbolInfo(parsed));
+      }
     };
   });
 
@@ -84,7 +93,7 @@ const App = ({ sockets }) => {
               </Container>
             </Navbar>
             <Routes>
-              <Route path="/" element={<HomePage symbols={sockets} />} />
+              <Route path="/" element={<HomePage />} />
               <Route path="/details" element={<DetailsPage />} />
               <Route
                 path="/favorites"
