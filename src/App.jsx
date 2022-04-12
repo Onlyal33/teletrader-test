@@ -1,4 +1,6 @@
-import { useState, useContext, useMemo } from 'react';
+import {
+  useState, useContext, useMemo,
+} from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -61,8 +63,14 @@ const NoMatch = () => {
   );
 };
 
-// eslint-disable-next-line arrow-body-style
-const App = ({ symbols }) => {
+const App = ({ sockets }) => {
+  sockets.forEach((socket) => {
+    // eslint-disable-next-line no-param-reassign
+    socket.onmessage = (event) => {
+      console.log(`[message] Data received from server: ${event.data}`);
+    };
+  });
+
   return (
     <AuthProvider>
       <Router>
@@ -76,7 +84,7 @@ const App = ({ symbols }) => {
               </Container>
             </Navbar>
             <Routes>
-              <Route path="/" element={<HomePage symbols={symbols} />} />
+              <Route path="/" element={<HomePage symbols={sockets} />} />
               <Route path="/details" element={<DetailsPage />} />
               <Route
                 path="/favorites"

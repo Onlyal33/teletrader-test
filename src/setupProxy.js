@@ -2,7 +2,7 @@ const { createProxyMiddleware, responseInterceptor } = require('http-proxy-middl
 
 module.exports = function (app) {
   app.use(
-    ['/v1', '/v2'],
+    '/v1',
     createProxyMiddleware({
       target: 'https://api.bitfinex.com/',
       changeOrigin: true,
