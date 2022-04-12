@@ -62,7 +62,7 @@ const NoMatch = () => {
 };
 
 // eslint-disable-next-line arrow-body-style
-const App = () => {
+const App = ({ symbols }) => {
   return (
     <AuthProvider>
       <Router>
@@ -76,7 +76,7 @@ const App = () => {
               </Container>
             </Navbar>
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<HomePage symbols={symbols} />} />
               <Route path="/details" element={<DetailsPage />} />
               <Route
                 path="/favorites"
