@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
-import AuthContext from '../contexts/AuthContext';
+import { AuthContext } from '../contexts/AuthProvider';
 
 const LoginButton = () => {
   const auth = useContext(AuthContext);

@@ -1,5 +1,5 @@
 import {
-  useState, useContext, useMemo,
+  useContext,
 } from 'react';
 import {
   BrowserRouter as Router,
@@ -15,27 +15,8 @@ import HomePage from './features/HomePage';
 import DetailsPage from './features/DetailsPage';
 import FavoritesPage from './features/FavoritesPage';
 import LoginButton from './features/LoginButton';
-import FavoritesLink from './features/FavoritesLink';
-import AuthContext from './contexts/AuthContext';
+import { AuthContext } from './contexts/AuthProvider';
 import { addSymbol, updateSymbolInfo } from './slices/tickerSlice';
-
-const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  const logIn = () => {
-    setLoggedIn(true);
-  };
-
-  const authData = useMemo(() => ({
-    loggedIn, logIn,
-  }), [loggedIn]);
-
-  return (
-    <AuthContext.Provider value={authData}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
 
 const RequireAuth = ({ children }) => {
   const auth = useContext(AuthContext);
@@ -66,6 +47,7 @@ const NoMatch = () => {
 };
 
 const App = ({ sockets }) => {
+  const auth = useContext(AuthContext);
   const dispatch = useDispatch();
   sockets.forEach((socket) => {
     // eslint-disable-next-line no-param-reassign
@@ -81,34 +63,32 @@ const App = ({ sockets }) => {
   });
 
   return (
-    <AuthProvider>
-      <Router>
-        <div className="h-100">
-          <div className="d-flex flex-column h-100">
-            <Navbar bg="light" expand="lg" className="shadow-sm">
-              <Container>
-                <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
-                <FavoritesLink />
-                <LoginButton />
-              </Container>
-            </Navbar>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/details/:pair" element={<DetailsPage />} />
-              <Route
-                path="/favorites"
-                element={(
-                  <RequireAuth>
-                    <FavoritesPage />
-                  </RequireAuth>
+    <Router>
+      <div className="h-100">
+        <div className="d-flex flex-column h-100">
+          <Navbar bg="light" expand="lg" className="shadow-sm">
+            <Container>
+              <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
+              {auth.loggedIn ? <Navbar.Brand className="me-auto" as={Link} to="/favorites">Favorites</Navbar.Brand> : null}
+              <LoginButton />
+            </Container>
+          </Navbar>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/details/:pair" element={<DetailsPage />} />
+            <Route
+              path="/favorites"
+              element={(
+                <RequireAuth>
+                  <FavoritesPage />
+                </RequireAuth>
           )}
-              />
-              <Route path="*" element={<NoMatch />} />
-            </Routes>
-          </div>
+            />
+            <Route path="*" element={<NoMatch />} />
+          </Routes>
         </div>
-      </Router>
-    </AuthProvider>
+      </div>
+    </Router>
   );
 };
 

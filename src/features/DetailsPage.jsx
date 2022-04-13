@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import routes from '../common/routes';
 import ToggleFavoriteButton from './ToggleFavoriteButton';
-import AuthContext from '../contexts/AuthContext';
+import { AuthContext } from '../contexts/AuthProvider';
 
 const DetailsPage = () => {
   const params = useParams();

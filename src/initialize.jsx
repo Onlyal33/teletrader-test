@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import tickerReducer from './slices/tickerSlice';
 import App from './App';
 import routes from './common/routes';
+import { AuthProvider } from './contexts/AuthProvider';
 
 export default async () => {
   const { data } = await axios.get(routes.symbolsPath());
@@ -35,7 +36,9 @@ export default async () => {
   });
   return (
     <Provider store={store}>
-      <App sockets={sockets} />
+      <AuthProvider>
+        <App sockets={sockets} />
+      </AuthProvider>
     </Provider>
   );
 };
