@@ -49,10 +49,10 @@ const DetailsPage = () => {
 
   return (
     <>
-      <Table striped bordered hover size="sm">
+      <Table striped hover borderless className="shadow-sm text-end">
         <thead>
           <tr>
-            <th>Symbol</th>
+            <th className="text-start">Symbol</th>
             <th>Last Price</th>
             <th>High</th>
             <th>Low</th>
@@ -60,7 +60,7 @@ const DetailsPage = () => {
         </thead>
         <tbody>
           <tr>
-            <td>{pair.toUpperCase()}</td>
+            <td className="text-start">{pair.toUpperCase()}</td>
             <td>{lastPrice}</td>
             <td>{high}</td>
             <td>{low}</td>

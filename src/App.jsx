@@ -1,20 +1,17 @@
-import {
-  useContext,
-} from 'react';
+import { useContext } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link,
   useLocation,
   Navigate,
 } from 'react-router-dom';
-import { Container, Navbar } from 'react-bootstrap';
+
 import { useDispatch } from 'react-redux';
+import NavBar from './features/NavBar';
 import HomePage from './features/HomePage';
 import DetailsPage from './features/DetailsPage';
 import FavoritesPage from './features/FavoritesPage';
-import LoginButton from './features/LoginButton';
 import { AuthContext } from './contexts/AuthProvider';
 import { addSymbol, updateSymbolInfo } from './slices/tickerSlice';
 
@@ -47,7 +44,6 @@ const NoMatch = () => {
 };
 
 const App = ({ sockets }) => {
-  const auth = useContext(AuthContext);
   const dispatch = useDispatch();
   sockets.forEach((socket) => {
     // eslint-disable-next-line no-param-reassign
@@ -65,14 +61,8 @@ const App = ({ sockets }) => {
   return (
     <Router>
       <div className="h-100">
-        <div className="d-flex flex-column h-100">
-          <Navbar bg="light" expand="lg" className="shadow-sm">
-            <Container>
-              <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
-              {auth.loggedIn ? <Navbar.Brand className="me-auto" as={Link} to="/favorites">Favorites</Navbar.Brand> : null}
-              <LoginButton />
-            </Container>
-          </Navbar>
+        <div className="d-flex flex-column">
+          <NavBar />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/details/:pair" element={<DetailsPage />} />

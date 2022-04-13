@@ -8,12 +8,12 @@ const ToggleFavoriteButton = ({ pair }) => {
   );
 
   const dispatch = useDispatch();
-  const text = isFavorite ? 'Remove' : 'Add';
+  const text = isFavorite ? 'Remove from' : 'Add to';
   return (
-    <Button variant={isFavorite ? 'danger' : 'primary'} className="ms-auto" onClick={() => dispatch(toggleFavorites(pair))}>
+    <Button variant={isFavorite ? 'danger' : 'info'} className="me-auto ms-2 text-white" onClick={() => dispatch(toggleFavorites(pair))}>
       {text}
       {' '}
-      Favorite
+      favorites
     </Button>
   );
 };

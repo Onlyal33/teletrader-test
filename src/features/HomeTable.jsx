@@ -11,9 +11,10 @@ const renderRow = ({ id, pair, data }) => {
   } = data;
   return (
     <tr key={id}>
-      <td>
+      <td className="text-start">
         <Link
           to={`/details/${pair}`}
+          className="link-info"
         >
           {pair}
         </Link>
@@ -28,10 +29,10 @@ const renderRow = ({ id, pair, data }) => {
 };
 
 const HomeTable = ({ symbols }) => (
-  <Table striped bordered hover size="sm">
+  <Table striped hover borderless className="shadow-sm text-end">
     <thead>
       <tr>
-        <th>Name</th>
+        <th className="text-start">Name</th>
         <th>Last</th>
         <th>Change</th>
         <th>Change percent</th>
