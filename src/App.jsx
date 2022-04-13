@@ -8,10 +8,10 @@ import {
 } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import NavBar from './features/NavBar';
-import HomePage from './features/HomePage';
-import DetailsPage from './features/DetailsPage';
-import FavoritesPage from './features/FavoritesPage';
+import NavBar from './components/NavBar';
+import HomePage from './components/HomePage';
+import DetailsPage from './components/DetailsPage';
+import FavoritesPage from './components/FavoritesPage';
 import { AuthContext } from './contexts/AuthProvider';
 import { addSymbol, updateSymbolInfo } from './slices/tickerSlice';
 

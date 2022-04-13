@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState, useContext } from 'react';
 import { Table } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import routes from '../common/routes';
+import routes from '../routes';
 import ToggleFavoriteButton from './ToggleFavoriteButton';
 import { AuthContext } from '../contexts/AuthProvider';
 

@@ -3,7 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import tickerReducer from './slices/tickerSlice';
 import App from './App';
-import routes from './common/routes';
+import routes from './routes';
 import { AuthProvider } from './contexts/AuthProvider';
 
 export default async () => {
