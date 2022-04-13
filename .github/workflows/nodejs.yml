@@ -1,6 +1,6 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: Node CI
 
 on:
   push:
@@ -28,11 +28,3 @@ jobs:
     - run: make install
     - run: make lint
     - run: make build
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
-
-    steps:
-      - uses: actions/checkout@v3
