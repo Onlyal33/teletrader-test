@@ -8,7 +8,17 @@ const tickerSlice = createSlice({
     addSymbol(state, action) {
       const { chanId, symbol, pair } = action.payload;
       state.symbols.push({
-        id: chanId, symbol, pair, favorite: false,
+        id: chanId,
+        symbol,
+        pair,
+        favorite: false,
+        data: {
+          dailyChange: null,
+          dailyChangeRelative: null,
+          lastPrice: null,
+          high: null,
+          low: null,
+        },
       });
     },
     updateSymbolInfo(state, action) {

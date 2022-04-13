@@ -1,5 +1,6 @@
 import { Table } from 'react-bootstrap';
 import { useSelector, shallowEqual } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const renderRow = ({ id, pair, data }) => {
   const {
@@ -11,10 +12,16 @@ const renderRow = ({ id, pair, data }) => {
   } = data;
   return (
     <tr key={id}>
-      <td>{pair}</td>
+      <td>
+        <Link
+          to={`/details/${pair}`}
+        >
+          {pair}
+        </Link>
+      </td>
       <td>{lastPrice}</td>
       <td>{dailyChange}</td>
-      <td>{dailyChangeRelative}</td>
+      <td>{dailyChangeRelative?.toLocaleString('en', { style: 'percent', maximumFractionDigits: 2 })}</td>
       <td>{high}</td>
       <td>{low}</td>
     </tr>

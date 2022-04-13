@@ -94,7 +94,7 @@ const App = ({ sockets }) => {
             </Navbar>
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/details" element={<DetailsPage />} />
+              <Route path="/details/:pair" element={<DetailsPage />} />
               <Route
                 path="/favorites"
                 element={(
