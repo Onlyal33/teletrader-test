@@ -7,9 +7,6 @@ import routes from './common/routes';
 import { AuthProvider } from './contexts/AuthProvider';
 
 export default async () => {
-  const { data } = await axios.get(routes.symbolsPath());
-  const symbols = data.slice(0, 5);
-
   const store = configureStore({
     reducer: {
       ticker: tickerReducer,
@@ -21,24 +18,36 @@ export default async () => {
     },
   });
 
-  const messages = symbols.map((symbol) => JSON.stringify({
-    event: 'subscribe',
-    channel: 'ticker',
-    symbol: `t${symbol.toUpperCase()}`,
-  }));
+  try {
+    const { data } = await axios.get(routes.symbolsPath());
+    const symbols = data.slice(0, 5);
 
-  const sockets = messages.map((message) => {
-    const socket = new WebSocket('wss://api-pub.bitfinex.com/ws/2');
-    socket.onopen = () => {
-      socket.send(message);
-    };
-    return socket;
-  });
-  return (
-    <Provider store={store}>
-      <AuthProvider>
-        <App sockets={sockets} />
-      </AuthProvider>
-    </Provider>
-  );
+    const messages = symbols.map((symbol) => JSON.stringify({
+      event: 'subscribe',
+      channel: 'ticker',
+      symbol: `t${symbol.toUpperCase()}`,
+    }));
+
+    const sockets = messages.map((message) => {
+      const socket = new WebSocket('wss://api-pub.bitfinex.com/ws/2');
+      socket.onopen = () => {
+        socket.send(message);
+      };
+      return socket;
+    });
+    return (
+      <Provider store={store}>
+        <AuthProvider>
+          <App sockets={sockets} />
+        </AuthProvider>
+      </Provider>
+    );
+  } catch (e) {
+    return (
+      <div>
+        Error:
+        {e.message}
+      </div>
+    );
+  }
 };
