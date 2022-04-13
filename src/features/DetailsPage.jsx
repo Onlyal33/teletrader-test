@@ -1,8 +1,10 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Table } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import routes from '../common/routes';
+import ToggleFavoriteButton from './ToggleFavoriteButton';
+import AuthContext from '../contexts/AuthContext';
 
 const DetailsPage = () => {
   const params = useParams();
@@ -10,6 +12,7 @@ const DetailsPage = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [details, setDetails] = useState({});
+  const auth = useContext(AuthContext);
 
   useEffect(() => {
     axios.get(routes.symbolPath(pair))
@@ -43,25 +46,29 @@ const DetailsPage = () => {
   const {
     lastPrice, high, low,
   } = details;
+
   return (
-    <Table striped bordered hover size="sm">
-      <thead>
-        <tr>
-          <th>Symbol</th>
-          <th>Last Price</th>
-          <th>High</th>
-          <th>Low</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{pair.toUpperCase()}</td>
-          <td>{lastPrice}</td>
-          <td>{high}</td>
-          <td>{low}</td>
-        </tr>
-      </tbody>
-    </Table>
+    <>
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>Last Price</th>
+            <th>High</th>
+            <th>Low</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{pair.toUpperCase()}</td>
+            <td>{lastPrice}</td>
+            <td>{high}</td>
+            <td>{low}</td>
+          </tr>
+        </tbody>
+      </Table>
+      {auth.loggedIn ? <ToggleFavoriteButton pair={pair} /> : null}
+    </>
   );
 };
 

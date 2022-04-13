@@ -35,7 +35,7 @@ const tickerSlice = createSlice({
       };
     },
     toggleFavorites(state, action) {
-      const symbol = state.symbols.find(({ id }) => id === action.payload.id);
+      const symbol = state.symbols.find(({ pair }) => pair === action.payload);
       symbol.favorite = !symbol.favorite;
     },
   },
