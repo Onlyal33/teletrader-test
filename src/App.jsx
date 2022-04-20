@@ -7,9 +7,9 @@ import {
   Navigate,
 } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import HomePage from './components/HomePage';
-import DetailsPage from './components/DetailsPage';
-import FavoritesPage from './components/FavoritesPage';
+import HomePage from './pages/HomePage';
+import DetailsPage from './pages/DetailsPage';
+import FavoritesPage from './pages/FavoritesPage';
 import { AuthProvider, AuthContext } from './contexts/AuthProvider';
 
 const RequireAuth = ({ children }) => {

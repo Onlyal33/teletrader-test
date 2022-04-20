@@ -1,5 +1,5 @@
 import { useSelector, shallowEqual } from 'react-redux';
-import HomeTable from './HomeTable';
+import HomeTable from '../components/HomeTable';
 
 const FavoritesPage = () => {
   const symbols = useSelector(

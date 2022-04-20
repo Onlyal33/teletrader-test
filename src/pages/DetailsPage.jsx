@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from 'react';
 import { Table } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import routes from '../routes';
-import ToggleFavoriteButton from './ToggleFavoriteButton';
+import ToggleFavoriteButton from '../components/ToggleFavoriteButton';
 import { AuthContext } from '../contexts/AuthProvider';
 
 const DetailsPage = () => {
