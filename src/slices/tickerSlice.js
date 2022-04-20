@@ -7,11 +7,10 @@ const tickerSlice = createSlice({
   reducers: {
     addSymbol(state, action) {
       const { chanId, symbol, pair } = action.payload;
-      state.symbols.push({
+      state.symbols.data.push({
         id: chanId,
         symbol,
         pair,
-        favorite: false,
         data: {
           dailyChange: null,
           dailyChangeRelative: null,
@@ -29,14 +28,13 @@ const tickerSlice = createSlice({
         lastPrice,,
         high,
         low] = data;
-      const symbol = state.symbols.find(({ id }) => id === channelId);
+      const symbol = state.symbols.data.find(({ id }) => id === channelId);
       symbol.data = {
         dailyChange, dailyChangeRelative, lastPrice, high, low,
       };
     },
     toggleFavorites(state, action) {
-      const symbol = state.symbols.find(({ pair }) => pair === action.payload);
-      symbol.favorite = !symbol.favorite;
+      state.symbols.favorites = action.payload;
     },
   },
 });

@@ -3,7 +3,10 @@ import HomeTable from '../components/HomeTable';
 
 const FavoritesPage = () => {
   const symbols = useSelector(
-    (state) => state.ticker.symbols.filter(({ favorite }) => favorite),
+    (state) => {
+      const favoritesSet = new Set(state.ticker.symbols.favorites);
+      return state.ticker.symbols.data.filter(({ pair }) => favoritesSet.has(pair));
+    },
     shallowEqual,
   );
 

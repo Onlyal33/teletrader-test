@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import tickerReducer, { addSymbol, updateSymbolInfo } from './slices/tickerSlice';
 import App from './App';
 import routes from './routes';
+import { getFavoritePairs } from './useFavorites';
 
 export default async () => {
   const store = configureStore({
@@ -12,7 +13,10 @@ export default async () => {
     },
     preloadedState: {
       ticker: {
-        symbols: [],
+        symbols: {
+          data: [],
+          favorites: getFavoritePairs(),
+        },
       },
     },
   });

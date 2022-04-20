@@ -1,17 +1,18 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { toggleFavorites } from '../slices/tickerSlice';
+import useFavorites from '../useFavorites';
 
 const ToggleFavoriteButton = ({ pair }) => {
-  const isFavorite = useSelector(
-    (state) => state.ticker.symbols.find((symbol) => symbol.pair === pair).favorite,
-  );
+  const isFavorite = useSelector((state) => state.ticker.symbols.favorites.includes(pair));
+  const { toggleFavoritePairs } = useFavorites();
 
-  const dispatch = useDispatch();
-  const text = isFavorite ? 'Remove from' : 'Add to';
   return (
-    <Button variant={isFavorite ? 'danger' : 'info'} className="me-auto ms-2 text-white" onClick={() => dispatch(toggleFavorites(pair))}>
-      {text}
+    <Button
+      variant={isFavorite ? 'danger' : 'info'}
+      className="me-auto ms-2 text-white"
+      onClick={() => toggleFavoritePairs(isFavorite, pair)}
+    >
+      {isFavorite ? 'Remove from' : 'Add to'}
       {' '}
       favorites
     </Button>
