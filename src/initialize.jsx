@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import tickerReducer from './slices/tickerSlice';
+import tickerReducer, { addSymbol, updateSymbolInfo } from './slices/tickerSlice';
 import App from './App';
 import routes from './routes';
 import { AuthProvider } from './contexts/AuthProvider';
@@ -29,16 +29,27 @@ export default async () => {
     }));
 
     const socket = new WebSocket('wss://api-pub.bitfinex.com/ws/2');
+
     socket.onopen = () => {
       messages.forEach((message) => {
         socket.send(message);
       });
     };
 
+    socket.onmessage = (event) => {
+      const parsed = JSON.parse(event.data);
+      if (parsed?.event === 'subscribed') {
+        store.dispatch(addSymbol(parsed));
+      }
+      if (Array.isArray(parsed) && Array.isArray(parsed?.[1])) {
+        store.dispatch(updateSymbolInfo(parsed));
+      }
+    };
+
     return (
       <Provider store={store}>
         <AuthProvider>
-          <App socket={socket} />
+          <App />
         </AuthProvider>
       </Provider>
     );
