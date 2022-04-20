@@ -43,20 +43,21 @@ const NoMatch = () => {
   );
 };
 
-const App = ({ sockets }) => {
+const App = ({ socket }) => {
   const dispatch = useDispatch();
-  sockets.forEach((socket) => {
-    // eslint-disable-next-line no-param-reassign
-    socket.onmessage = (event) => {
-      const parsed = JSON.parse(event.data);
-      if (parsed?.event === 'subscribed') {
-        dispatch(addSymbol(parsed));
-      }
-      if (Array.isArray(parsed) && Array.isArray(parsed?.[1])) {
-        dispatch(updateSymbolInfo(parsed));
-      }
-    };
-  });
+  // sockets.forEach((socket) => {
+  // eslint-disable-next-line no-param-reassign
+  socket.onmessage = (event) => {
+    const parsed = JSON.parse(event.data);
+    if (parsed?.event === 'subscribed') {
+      dispatch(addSymbol(parsed));
+    }
+    if (Array.isArray(parsed) && Array.isArray(parsed?.[1])) {
+      dispatch(updateSymbolInfo(parsed));
+    }
+    console.log(event.data);
+  };
+  // });
 
   return (
     <Router>
