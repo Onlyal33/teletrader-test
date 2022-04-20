@@ -45,7 +45,6 @@ const NoMatch = () => {
 
 const App = ({ socket }) => {
   const dispatch = useDispatch();
-  // sockets.forEach((socket) => {
   // eslint-disable-next-line no-param-reassign
   socket.onmessage = (event) => {
     const parsed = JSON.parse(event.data);
@@ -55,9 +54,7 @@ const App = ({ socket }) => {
     if (Array.isArray(parsed) && Array.isArray(parsed?.[1])) {
       dispatch(updateSymbolInfo(parsed));
     }
-    console.log(event.data);
   };
-  // });
 
   return (
     <Router>
