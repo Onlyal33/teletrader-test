@@ -10,7 +10,7 @@ import NavBar from './components/NavBar';
 import HomePage from './components/HomePage';
 import DetailsPage from './components/DetailsPage';
 import FavoritesPage from './components/FavoritesPage';
-import { AuthContext } from './contexts/AuthProvider';
+import { AuthProvider, AuthContext } from './contexts/AuthProvider';
 
 const RequireAuth = ({ children }) => {
   const auth = useContext(AuthContext);
@@ -41,26 +41,28 @@ const NoMatch = () => {
 };
 
 const App = () => (
-  <Router>
-    <div className="h-100">
-      <div className="d-flex flex-column">
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/details/:pair" element={<DetailsPage />} />
-          <Route
-            path="/favorites"
-            element={(
-              <RequireAuth>
-                <FavoritesPage />
-              </RequireAuth>
+  <AuthProvider>
+    <Router>
+      <div className="h-100">
+        <div className="d-flex flex-column">
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/details/:pair" element={<DetailsPage />} />
+            <Route
+              path="/favorites"
+              element={(
+                <RequireAuth>
+                  <FavoritesPage />
+                </RequireAuth>
           )}
-          />
-          <Route path="*" element={<NoMatch />} />
-        </Routes>
+            />
+            <Route path="*" element={<NoMatch />} />
+          </Routes>
+        </div>
       </div>
-    </div>
-  </Router>
+    </Router>
+  </AuthProvider>
 );
 
 export default App;

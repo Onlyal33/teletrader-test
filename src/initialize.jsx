@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import tickerReducer, { addSymbol, updateSymbolInfo } from './slices/tickerSlice';
 import App from './App';
 import routes from './routes';
-import { AuthProvider } from './contexts/AuthProvider';
 
 export default async () => {
   const store = configureStore({
@@ -48,9 +47,7 @@ export default async () => {
 
     return (
       <Provider store={store}>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
+        <App />
       </Provider>
     );
   } catch (e) {
