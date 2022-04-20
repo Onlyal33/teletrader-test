@@ -28,17 +28,17 @@ export default async () => {
       symbol: `t${symbol.toUpperCase()}`,
     }));
 
-    const sockets = messages.map((message) => {
-      const socket = new WebSocket('wss://api-pub.bitfinex.com/ws/2');
-      socket.onopen = () => {
+    const socket = new WebSocket('wss://api-pub.bitfinex.com/ws/2');
+    socket.onopen = () => {
+      messages.forEach((message) => {
         socket.send(message);
-      };
-      return socket;
-    });
+      });
+    };
+
     return (
       <Provider store={store}>
         <AuthProvider>
-          <App sockets={sockets} />
+          <App socket={socket} />
         </AuthProvider>
       </Provider>
     );
