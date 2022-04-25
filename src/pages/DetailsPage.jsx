@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState, useContext } from 'react';
 import { Table } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import useSubscription from '../useSubscription';
 import routes from '../routes';
 import ToggleFavoriteButton from '../components/ToggleFavoriteButton';
 import { AuthContext } from '../contexts/AuthProvider';
@@ -13,6 +14,8 @@ const DetailsPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [details, setDetails] = useState({});
   const auth = useContext(AuthContext);
+
+  useSubscription([]);
 
   useEffect(() => {
     axios.get(routes.symbolPath(pair))

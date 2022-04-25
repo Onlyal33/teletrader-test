@@ -1,7 +1,8 @@
 import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useSelector, shallowEqual } from 'react-redux';
 
-const renderRow = ({ id, pair, data }) => {
+const renderRow = ({ symbol, pair, data }) => {
   const {
     dailyChange,
     dailyChangeRelative,
@@ -10,7 +11,7 @@ const renderRow = ({ id, pair, data }) => {
     low,
   } = data;
   return (
-    <tr key={id}>
+    <tr key={symbol}>
       <td className="text-start">
         <Link
           to={`/details/${pair}`}
@@ -28,22 +29,34 @@ const renderRow = ({ id, pair, data }) => {
   );
 };
 
-const HomeTable = ({ symbols }) => (
-  <Table striped hover borderless className="shadow-sm text-end">
-    <thead>
-      <tr>
-        <th className="text-start">Name</th>
-        <th>Last</th>
-        <th>Change</th>
-        <th>Change percent</th>
-        <th>High</th>
-        <th>Low</th>
-      </tr>
-    </thead>
-    <tbody>
-      {symbols.length > 0 ? symbols.map(renderRow) : null}
-    </tbody>
-  </Table>
-);
+const selectors = {
+  home: (state) => state.ticker.symbols.data,
+  favorites: (state) => {
+    const favoritesSet = new Set(state.ticker.symbols.favorites);
+    return state.ticker.symbols.data.filter(({ pair }) => favoritesSet.has(pair));
+  },
+};
+
+const HomeTable = ({ type }) => {
+  const symbols = useSelector(selectors[type], shallowEqual);
+
+  return (
+    <Table striped hover borderless className="shadow-sm text-end">
+      <thead>
+        <tr>
+          <th className="text-start">Name</th>
+          <th>Last</th>
+          <th>Change</th>
+          <th>Change percent</th>
+          <th>High</th>
+          <th>Low</th>
+        </tr>
+      </thead>
+      <tbody>
+        {symbols.length > 0 ? symbols.map(renderRow) : null}
+      </tbody>
+    </Table>
+  );
+};
 
 export default HomeTable;
