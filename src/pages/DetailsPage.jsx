@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import useSubscription from '../useSubscription';
 import routes from '../routes';
 import ToggleFavoriteButton from '../components/ToggleFavoriteButton';
-import { AuthContext } from '../contexts/AuthProvider';
+import { useAuth } from '../contexts/AuthContext';
 
 const DetailsPage = () => {
   const params = useParams();
@@ -13,7 +13,7 @@ const DetailsPage = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [details, setDetails] = useState({});
-  const auth = useContext(AuthContext);
+  const { user } = useAuth();
 
   useSubscription([]);
 
@@ -68,7 +68,7 @@ const DetailsPage = () => {
           </tr>
         </tbody>
       </Table>
-      {auth.loggedIn && <ToggleFavoriteButton pair={pair} />}
+      {user && <ToggleFavoriteButton pair={pair} />}
     </>
   );
 };

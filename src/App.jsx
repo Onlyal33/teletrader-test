@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,14 +9,14 @@ import NavBar from './components/NavBar';
 import HomePage from './pages/HomePage';
 import DetailsPage from './pages/DetailsPage';
 import FavoritesPage from './pages/FavoritesPage';
-import { AuthProvider, AuthContext } from './contexts/AuthProvider';
+import { useAuth, AuthProvider } from './contexts/AuthContext';
 
 const RequireAuth = ({ children }) => {
-  const auth = useContext(AuthContext);
+  const { user } = useAuth;
   const location = useLocation();
 
   return (
-    !auth.loggedIn ? (
+    !user ? (
       <Navigate to="/" state={{ from: location }} replace />
     ) : (
       children

@@ -1,17 +1,16 @@
-import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
-import { AuthContext } from '../contexts/AuthProvider';
+import { useAuth } from '../contexts/AuthContext';
 
 const LoginButton = () => {
-  const auth = useContext(AuthContext);
+  const { user, logIn, logOut } = useAuth();
 
   return (
     <Button
       variant="info"
       className="ms-auto me-2 text-white"
-      onClick={auth.logIn}
+      onClick={user ? logOut : logIn}
     >
-      Log in
+      {user ? 'Log Out' : 'Log In'}
     </Button>
   );
 };
