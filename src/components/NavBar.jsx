@@ -14,8 +14,9 @@ const NavBar = () => {
   return (
     <Navbar variant="light" bg="light" expand="lg" className="shadow-sm">
       <Nav.Link as={NavLink} to="/" style={setStyle}>Home</Nav.Link>
-      {auth.loggedIn ? <Nav.Link as={NavLink} to="/favorites" style={setStyle} className="me-auto">Favorites</Nav.Link> : null}
-      <LoginButton />
+      {auth.loggedIn
+        ? <Nav.Link as={NavLink} to="/favorites" style={setStyle} className="me-auto">Favorites</Nav.Link>
+        : <LoginButton />}
     </Navbar>
   );
 };

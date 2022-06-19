@@ -53,7 +53,7 @@ const HomeTable = ({ type }) => {
         </tr>
       </thead>
       <tbody>
-        {symbols.length > 0 ? symbols.map(renderRow) : null}
+        {symbols.length > 0 && symbols.map(renderRow)}
       </tbody>
     </Table>
   );

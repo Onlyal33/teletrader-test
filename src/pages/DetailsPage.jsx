@@ -68,7 +68,7 @@ const DetailsPage = () => {
           </tr>
         </tbody>
       </Table>
-      {auth.loggedIn ? <ToggleFavoriteButton pair={pair} /> : null}
+      {auth.loggedIn && <ToggleFavoriteButton pair={pair} />}
     </>
   );
 };
