@@ -12,7 +12,7 @@ import FavoritesPage from './pages/FavoritesPage';
 import { useAuth, AuthProvider } from './contexts/AuthContext';
 
 const RequireAuth = ({ children }) => {
-  const { user } = useAuth;
+  const { user } = useAuth();
   const location = useLocation();
 
   return (

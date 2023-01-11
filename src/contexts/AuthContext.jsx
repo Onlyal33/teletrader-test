@@ -1,28 +1,30 @@
 import {
-  useState, useMemo, createContext, useContext,
+  useState, useMemo, createContext, useContext, useCallback,
 } from 'react';
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(localStorage.getItem('userId') || null);
+const getInitialLoginState = () => localStorage.getItem('userId') || null;
 
-  const logIn = () => {
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(getInitialLoginState);
+
+  const logIn = useCallback(() => {
     const fakeUserId = 'fakeUserId';
     localStorage.setItem('userId', fakeUserId);
     setUser(fakeUserId);
-  };
+  }, []);
 
-  const logOut = () => {
+  const logOut = useCallback(() => {
     localStorage.removeItem('userId');
     setUser(null);
-  };
+  }, []);
 
   const authData = useMemo(() => ({
     user,
     logIn,
     logOut,
-  }), [user]);
+  }), [user, logIn, logOut]);
 
   return (
     <AuthContext.Provider value={authData}>
