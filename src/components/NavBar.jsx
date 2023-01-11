@@ -8,8 +8,8 @@ const NavBar = () => {
   const setStyle = ({ isActive }) => (isActive ? { color: '#0dcaf0' } : { color: '#6c757d' });
   return (
     <Navbar variant="light" bg="light" expand="lg" className="shadow-sm">
-      <Nav.Link as={NavLink} to="/" style={setStyle}>Home</Nav.Link>
-      {user && <Nav.Link as={NavLink} to="/favorites" style={setStyle} className="me-auto">Favorites</Nav.Link>}
+      <Nav.Link as={NavLink} to="/" style={setStyle} className="p-2">Home</Nav.Link>
+      {user && <Nav.Link as={NavLink} to="/favorites" style={setStyle} className="p-2">Favorites</Nav.Link>}
       <LoginButton />
     </Navbar>
   );
